@@ -1,0 +1,3 @@
+Motion profile generation and execution code for MiniFRC robot.
+
+Uses Hermite cubic splines
