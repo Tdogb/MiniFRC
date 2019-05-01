@@ -1,36 +1,23 @@
 package autonomous;
 
-public class Spline extends MotionProfile {
-    Vector p0, p1, t0, t1, a, b, c, d;
+import java.util.ArrayList;
 
+public class MotionProfile {
+    final double timeStep = 0.01;
+    final double maxVel = 0.2; //m/s
+    final double maxAccel = 0.1; //m/s^2
+    final double robotWheelBase = 0.18; //Diameter
+    final double robotWheelDiameter = 0.051;
+    double cruiseStart = 100;
+    double cruiseEnd = 0;
+    double cruiseTime = 0;
+    double pathTime = 0;
+    boolean instantaneousCruise = false;
+    boolean velocityProfileGenerated = false;
+    double tconversionFactor = 1;
 
-    public Spline(Vector pt0, Vector pt1, Vector tangent0, Vector tangent1) {
-//        this.p0 = new Vector(0,0);
-//        this.p1 = new Vector(2,4);
-//        this.t0 = new Vector(1,0);
-//        this.t1 = new Vector(1,0);
-        this.p0 = pt0;
-        this.p1 = pt1;
-        this.t0 = tangent0;
-        this.t1 = tangent1;
-        generateSpline();
-    }
+    ArrayList<Waypoint> wp = new ArrayList<Waypoint>();
 
-    /**
-     * Uses quotient rule to find derrivative of the slope y/slope x
-     * @param _t
-     * @return Angular velocity
-     */
-    public double deltaTheta(double _t) {
-        double t = _t * tconversionFactor;
-        double dtheta = ((3*a.x()*Math.pow(t,2)+2*b.x()*t+c.x())*(6*a.y()*t+2*b.y())-((3*a.y()*Math.pow(t,2)+2*b.y()*t+c.y()*1)*(6*a.x()*t+2*b.x())))/(Math.pow(3*a.x()*Math.pow(t,2)+2*b.x()*t+c.x(),2));
-        return dtheta/timeStep;
-    }
-
-    /**
-     * velocityProfile
-     * @return Base velocity setpoint at time
-     */
     public double velocityProfile(double t) {
         if(velocityProfileGenerated) {
 //            t = _t * tconversionFactor;
@@ -118,63 +105,5 @@ public class Spline extends MotionProfile {
         pathTime = cruiseEnd + cruiseStart; //Because cruisestart should be one of the triangles and cruiseend is one triangle + middle
         tconversionFactor = 1/pathTime;
         velocityProfileGenerated = true;
-    }
-
-    private void generateSpline() {
-        //First run on x then on y
-        double dx = p0.x(); //x0
-        double dy = p0.y(); //y0
-        double cx = t0.x();
-        double cy = t0.y();
-        double bx = -3*dx+3*p1.x()-2*cx-t1.x();
-        double by = -3*dy+3*p1.y()-2*cy-t1.y();
-        double ax = 2*dx-2*p1.x()+cx+t1.x();
-        double ay = 2*dy-2*p1.y()+cy+t1.y();
-
-        a = new Vector(ax,ay);
-        b = new Vector(bx,by);
-        c = new Vector(cx,cy);
-        d = new Vector(dx,dy);
-        generateVelocityProfile();
-        //debug();
-
-    }
-
-    private void debug() {
-        for(double time = timeStep; time <= pathTime; time+=timeStep) {
-            double t = time * tconversionFactor;
-            System.out.println("");
-            System.out.print(time);
-            System.out.print(",");
-            System.out.print(a.x()*Math.pow(t,3)+b.x()*Math.pow(t,2)+c.x()*t+d.x());
-            System.out.print(",");
-            System.out.print(a.y()*Math.pow(t,3)+b.y()*Math.pow(t,2)+c.y()*t+d.y());
-            System.out.print(",");
-            System.out.print(velocityProfile(time));
-            System.out.print(",");
-            System.out.print(deltaTheta(time));
-            System.out.print(",");
-        }
-        System.out.println("");
-        System.out.println(a);
-        System.out.println(b);
-        System.out.println(c);
-        System.out.println(d);
-
-        System.out.println(cruiseStart);
-        System.out.println(cruiseEnd);
-        System.out.println(instantaneousCruise);
-        System.out.println("Values ");
-        System.out.println(a.x());
-        System.out.println(b.x());
-        System.out.println(c.x());
-        System.out.println(d.x());
-        System.out.println(a.y());
-        System.out.println(b.y());
-        System.out.println(c.y());
-        System.out.println(d.y());
-        for (double time = timeStep; time <= pathTime; time += timeStep) {
-            System.out.println(deltaTheta(time));
-        }
     }
 }

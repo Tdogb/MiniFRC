@@ -1,4 +1,5 @@
-import motor.Brushed;
+import motor.*;
+import autonomous.*;
 
 public class Drivetrain {
     Brushed rMotor;
@@ -8,19 +9,9 @@ public class Drivetrain {
 
     }
 
-    public void autoInit() {
+    public boolean followProfile(Spline s) {
 
+        return true;
     }
 
-    public void autoPeriodic() {
-
-    }
-
-    public void teleopInit() {
-
-    }
-
-    public void teleopPeriodic() {
-
-    }
 }
