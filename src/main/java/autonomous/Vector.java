@@ -1,6 +1,8 @@
+package autonomous;
+
 public class Vector {
-    double x;
-    double y;
+    private double x;
+    private double y;
 
     public Vector(double x, double y) {
         this.x = x;
