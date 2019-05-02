@@ -1,4 +1,6 @@
-import autonomous.Waypoint;
+package robot;
+
+import robot.autonomous.Waypoint;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,6 @@
-package sensor;
+package robot.sensor;
 
 import com.pi4j.io.serial.*;
-import com.pi4j.util.CommandArgumentParser;
-import com.pi4j.util.Console;
 
 import java.io.IOException;
 

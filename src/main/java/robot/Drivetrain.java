@@ -1,5 +1,7 @@
-import autonomous.*;
-import motor.*;
+package robot;
+
+import robot.autonomous.*;
+import robot.motor.*;
 
 public class Drivetrain {
     Brushed rMotor;

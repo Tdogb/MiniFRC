@@ -1,4 +1,4 @@
-package autonomous;
+package robot.autonomous;
 
 public class Waypoint {
     private Vector position;

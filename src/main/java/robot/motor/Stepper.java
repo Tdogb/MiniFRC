@@ -1,5 +1,6 @@
+package robot.motor;
+
 import com.pi4j.io.gpio.*;
-import com.pi4j.wiringpi.Gpio;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,8 +14,8 @@ public class Stepper {
     TimerTask pwm;
 
     public Stepper(Pin _stepPin, Pin _dirPin) {
-        final GpioPinDigitalOutput stepPin = Global.gpio.provisionDigitalOutputPin(_stepPin, PinState.LOW);
-        this.dirPin = Global.gpio.provisionDigitalOutputPin(_dirPin, PinState.LOW);
+        final GpioPinDigitalOutput stepPin = robot.Global.gpio.provisionDigitalOutputPin(_stepPin, PinState.LOW);
+        this.dirPin = robot.Global.gpio.provisionDigitalOutputPin(_dirPin, PinState.LOW);
         stepPin.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
         dirPin.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
         stepTimer = new Timer("steptimer");

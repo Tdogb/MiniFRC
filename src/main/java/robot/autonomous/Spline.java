@@ -1,4 +1,4 @@
-package autonomous;
+package robot.autonomous;
 
 public class Spline {
     Vector p0, p1, t0, t1, a, b, c, d;
@@ -43,15 +43,15 @@ public class Spline {
      */
     public double deltaTheta(double t) {
         double dtheta = ((3*a.x()*Math.pow(t,2)+2*b.x()*t+c.x())*(6*a.y()*t+2*b.y())-((3*a.y()*Math.pow(t,2)+2*b.y()*t+c.y()*1)*(6*a.x()*t+2*b.x())))/(Math.pow(3*a.x()*Math.pow(t,2)+2*b.x()*t+c.x(),2));
-        return dtheta/ AutonomousVars.timeStep;
+        return dtheta/ robot.Global.timeStep;
     }
 
     private void computeArcLength() {
         double totalTime = 0;
-        for(double t = 0; t <=1; t+= AutonomousVars.timeStep) { //These are also in terms of this "fake" time (proportional to total time)
+        for(double t = 0; t <=1; t+= robot.Global.timeStep) { //These are also in terms of this "fake" time (proportional to total time)
             double dx = 3*a.x()*Math.pow(t,2)+2*b.x()*t+c.x();
             double dy = 3*a.y()*Math.pow(t,2)+2*b.y()*t+c.y();
-            arcLength += Math.sqrt(1+(Math.pow(dx,2) + Math.pow(dy,2)))* AutonomousVars.timeStep;
+            arcLength += Math.sqrt(1+(Math.pow(dx,2) + Math.pow(dy,2)))* robot.Global.timeStep;
         }
     }
 
@@ -60,7 +60,7 @@ public class Spline {
     }
 
     public void debug(double tconversionFactor, double pathTime) {
-        for(double time = AutonomousVars.timeStep; time <= pathTime; time+= AutonomousVars.timeStep) {
+        for(double time = robot.Global.timeStep; time <= pathTime; time+= robot.Global.timeStep) {
             double t = time * tconversionFactor;
             System.out.println("");
             System.out.print(time);
@@ -73,23 +73,5 @@ public class Spline {
             System.out.print(deltaTheta(time));
             System.out.print(",");
         }
-//        System.out.println("");
-//        System.out.println(a);
-//        System.out.println(b);
-//        System.out.println(c);
-//        System.out.println(d);
-//
-//        System.out.println("Values ");
-//        System.out.println(a.x());
-//        System.out.println(b.x());
-//        System.out.println(c.x());
-//        System.out.println(d.x());
-//        System.out.println(a.y());
-//        System.out.println(b.y());
-//        System.out.println(c.y());
-//        System.out.println(d.y());
-//        for (double time = AutonomousVars.timeStep; time <= pathTime; time += AutonomousVars.timeStep) {
-//            System.out.println(deltaTheta(time));
-//        }
     }
 }

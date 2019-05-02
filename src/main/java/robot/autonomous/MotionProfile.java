@@ -1,4 +1,4 @@
-package autonomous;
+package robot.autonomous;
 
 import java.util.ArrayList;
 
@@ -37,13 +37,13 @@ public class MotionProfile {
     public double velocityProfile(double t) {
         if(velocityProfileGenerated) {
             if(t < cruiseStart) {
-                return AutonomousVars.maxAccel*t;
+                return robot.Global.maxAccel*t;
             }
             else if(t>= cruiseStart && t<= cruiseEnd) {
-                return AutonomousVars.maxVel;
+                return robot.Global.maxVel;
             }
             else {
-                return AutonomousVars.maxVel - AutonomousVars.maxAccel*(t-cruiseEnd);
+                return robot.Global.maxVel - robot.Global.maxAccel*(t-cruiseEnd);
             }
         }
         else {
@@ -60,21 +60,21 @@ public class MotionProfile {
         //cruise, end cruise
         double v = 0;
         double distance = 0;
-        double t = AutonomousVars.timeStep;
+        double t = robot.Global.timeStep;
         //Acceleration IN REAL TIME UNITS
-        while(v < AutonomousVars.maxVel && !instantaneousCruise) {
+        while(v < robot.Global.maxVel && !instantaneousCruise) {
             double vi = v;
-            v = v + AutonomousVars.maxAccel * AutonomousVars.timeStep;
-            distance += (v-vi)* AutonomousVars.timeStep;
+            v = v + robot.Global.maxAccel * robot.Global.timeStep;
+            distance += (v-vi)* robot.Global.timeStep;
             if(distance > totalArcLength/2) {
                 cruiseStart = t;
                 cruiseEnd = t;
                 instantaneousCruise = true;
             }
-            t+= AutonomousVars.timeStep;
-            totalTime += AutonomousVars.timeStep;
-            if(v >= AutonomousVars.maxVel) {
-                v = AutonomousVars.maxVel;
+            t+= robot.Global.timeStep;
+            totalTime += robot.Global.timeStep;
+            if(v >= robot.Global.maxVel) {
+                v = robot.Global.maxVel;
                 cruiseStart = t;
                 instantaneousCruise = false;
             }
@@ -85,16 +85,16 @@ public class MotionProfile {
             t = 0;
             distance = 0;
             v = 0;
-            while(v < AutonomousVars.maxVel) {
+            while(v < robot.Global.maxVel) {
                 double vi = v;
-                v = v + AutonomousVars.maxAccel* AutonomousVars.timeStep;
-                distance += (v-vi)* AutonomousVars.timeStep;
-                if(v >= AutonomousVars.maxVel) {
-                    cruiseTime = (totalArcLength - 2 * distance)/ AutonomousVars.maxVel;
+                v = v + robot.Global.maxAccel* robot.Global.timeStep;
+                distance += (v-vi)* robot.Global.timeStep;
+                if(v >= robot.Global.maxVel) {
+                    cruiseTime = (totalArcLength - 2 * distance)/ robot.Global.maxVel;
                     cruiseEnd = cruiseStart + cruiseTime;
                 }
-                t += AutonomousVars.timeStep;
-                totalTime += AutonomousVars.timeStep;
+                t += robot.Global.timeStep;
+                totalTime += robot.Global.timeStep;
             }
             //totalTime = (1 - (cruiseEnd-cruiseStart)); in terms of ratios.
             //T total time is the 2 triangles in the trapezoid, and the cruise is the block in the middle
@@ -112,7 +112,7 @@ public class MotionProfile {
 
     private void debug() {
         for (Spline s : splines) {
-            s.debug(tconversionFactor, pathTime);
+            //s.debug(tconversionFactor, pathTime);
         }
     }
 }

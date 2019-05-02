@@ -1,4 +1,6 @@
-import autonomous.MotionProfile;
+package robot;
+
+import robot.autonomous.MotionProfile;
 
 import java.util.concurrent.ScheduledFuture;
 
