@@ -3,11 +3,6 @@ package autonomous;
 import java.util.ArrayList;
 
 public class MotionProfile {
-    final double timeStep = 0.01;
-    final double maxVel = 0.2; //m/s
-    final double maxAccel = 0.1; //m/s^2
-    final double robotWheelBase = 0.18; //Diameter
-    final double robotWheelDiameter = 0.051;
     double cruiseStart = 100;
     double cruiseEnd = 0;
     double cruiseTime = 0;
@@ -15,22 +10,40 @@ public class MotionProfile {
     boolean instantaneousCruise = false;
     boolean velocityProfileGenerated = false;
     double tconversionFactor = 1;
+    double totalTime = 0;
 
-    ArrayList<Waypoint> wp = new ArrayList<Waypoint>();
+    ArrayList<Waypoint> wps;
+    ArrayList<Spline> splines;
+
+    double totalArcLength = 0;
+
+    public MotionProfile(ArrayList<Waypoint> wps) {
+        this.wps = wps;
+        splines = new ArrayList<Spline>();
+        initMP();
+    }
+
+    private void initMP() {
+        for(int i = 1; i < wps.size(); i++) {
+            splines.add(new Spline(wps.get(i-1), wps.get(i)));
+        }
+        for(int i = 0; i < splines.size(); i++) {
+            totalArcLength += splines.get(i).getArcLength();
+        }
+        generateVelocityProfile();
+        debug();
+    }
 
     public double velocityProfile(double t) {
         if(velocityProfileGenerated) {
-//            t = _t * tconversionFactor;
             if(t < cruiseStart) {
-//                return 0.5*maxAccel*Math.pow(t,2);
-                return maxAccel*t;
+                return GlobalVars.maxAccel*t;
             }
             else if(t>= cruiseStart && t<= cruiseEnd) {
-                return maxVel;
+                return GlobalVars.maxVel;
             }
             else {
-//                return maxVel - 0.5*maxAccel*Math.pow((t-cruiseEnd), 2);
-                return maxVel - maxAccel*(t-cruiseEnd);
+                return GlobalVars.maxVel - GlobalVars.maxAccel*(t-cruiseEnd);
             }
         }
         else {
@@ -45,33 +58,23 @@ public class MotionProfile {
 
         //Points:
         //cruise, end cruise
-        double totalTime = 0;
-        double arcLength = 0;
-        for(double t = 0; t <=1; t+=timeStep) { //These are also in terms of this "fake" time (proportional to total time)
-            double dx = 3*a.x()*Math.pow(t,2)+2*b.x()*t+c.x();
-            double dy = 3*a.y()*Math.pow(t,2)+2*b.y()*t+c.y();
-            arcLength += Math.sqrt(1+(Math.pow(dx,2) + Math.pow(dy,2)))*timeStep;
-        }
         double v = 0;
         double distance = 0;
-        double t = timeStep;
+        double t = GlobalVars.timeStep;
         //Acceleration IN REAL TIME UNITS
-        while(v < maxVel && !instantaneousCruise) {
+        while(v < GlobalVars.maxVel && !instantaneousCruise) {
             double vi = v;
-            v = v + maxAccel * timeStep;
-            distance += (v-vi)*timeStep;
-            if(distance > arcLength/2) {
+            v = v + GlobalVars.maxAccel * GlobalVars.timeStep;
+            distance += (v-vi)*GlobalVars.timeStep;
+            if(distance > totalArcLength/2) {
                 cruiseStart = t;
                 cruiseEnd = t;
                 instantaneousCruise = true;
             }
-            t+=timeStep;
-            totalTime += timeStep;
-//            System.out.println("");
-//            System.out.print(distance);
-//            System.out.print("  " + v);
-            if(v >= maxVel) {
-                v = maxVel;
+            t+=GlobalVars.timeStep;
+            totalTime += GlobalVars.timeStep;
+            if(v >= GlobalVars.maxVel) {
+                v = GlobalVars.maxVel;
                 cruiseStart = t;
                 instantaneousCruise = false;
             }
@@ -82,16 +85,16 @@ public class MotionProfile {
             t = 0;
             distance = 0;
             v = 0;
-            while(v < maxVel) {
+            while(v < GlobalVars.maxVel) {
                 double vi = v;
-                v = v + maxAccel*timeStep;
-                distance += (v-vi)*timeStep;
-                if(v >= maxVel) {
-                    cruiseTime = (arcLength - 2 * distance)/maxVel;
+                v = v + GlobalVars.maxAccel*GlobalVars.timeStep;
+                distance += (v-vi)*GlobalVars.timeStep;
+                if(v >= GlobalVars.maxVel) {
+                    cruiseTime = (totalArcLength - 2 * distance)/GlobalVars.maxVel;
                     cruiseEnd = cruiseStart + cruiseTime;
                 }
-                t += timeStep;
-                totalTime += timeStep;
+                t += GlobalVars.timeStep;
+                totalTime += GlobalVars.timeStep;
             }
             //totalTime = (1 - (cruiseEnd-cruiseStart)); in terms of ratios.
             //T total time is the 2 triangles in the trapezoid, and the cruise is the block in the middle
@@ -105,5 +108,11 @@ public class MotionProfile {
         pathTime = cruiseEnd + cruiseStart; //Because cruisestart should be one of the triangles and cruiseend is one triangle + middle
         tconversionFactor = 1/pathTime;
         velocityProfileGenerated = true;
+    }
+
+    private void debug() {
+        for (Spline s : splines) {
+            s.debug(tconversionFactor, pathTime);
+        }
     }
 }

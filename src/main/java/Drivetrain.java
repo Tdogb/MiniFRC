@@ -1,6 +1,7 @@
 import motor.*;
 import autonomous.*;
 
+
 public class Drivetrain {
     Brushed rMotor;
     Brushed lMotor;
@@ -9,7 +10,7 @@ public class Drivetrain {
 
     }
 
-    public boolean followProfile(Spline s) {
+    public boolean followProfile(MotionProfile mp) {
 
         return true;
     }
