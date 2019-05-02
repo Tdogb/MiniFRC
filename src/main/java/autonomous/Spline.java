@@ -43,15 +43,15 @@ public class Spline {
      */
     public double deltaTheta(double t) {
         double dtheta = ((3*a.x()*Math.pow(t,2)+2*b.x()*t+c.x())*(6*a.y()*t+2*b.y())-((3*a.y()*Math.pow(t,2)+2*b.y()*t+c.y()*1)*(6*a.x()*t+2*b.x())))/(Math.pow(3*a.x()*Math.pow(t,2)+2*b.x()*t+c.x(),2));
-        return dtheta/GlobalVars.timeStep;
+        return dtheta/ AutonomousVars.timeStep;
     }
 
     private void computeArcLength() {
         double totalTime = 0;
-        for(double t = 0; t <=1; t+=GlobalVars.timeStep) { //These are also in terms of this "fake" time (proportional to total time)
+        for(double t = 0; t <=1; t+= AutonomousVars.timeStep) { //These are also in terms of this "fake" time (proportional to total time)
             double dx = 3*a.x()*Math.pow(t,2)+2*b.x()*t+c.x();
             double dy = 3*a.y()*Math.pow(t,2)+2*b.y()*t+c.y();
-            arcLength += Math.sqrt(1+(Math.pow(dx,2) + Math.pow(dy,2)))*GlobalVars.timeStep;
+            arcLength += Math.sqrt(1+(Math.pow(dx,2) + Math.pow(dy,2)))* AutonomousVars.timeStep;
         }
     }
 
@@ -60,7 +60,7 @@ public class Spline {
     }
 
     public void debug(double tconversionFactor, double pathTime) {
-        for(double time = GlobalVars.timeStep; time <= pathTime; time+=GlobalVars.timeStep) {
+        for(double time = AutonomousVars.timeStep; time <= pathTime; time+= AutonomousVars.timeStep) {
             double t = time * tconversionFactor;
             System.out.println("");
             System.out.print(time);
@@ -88,7 +88,7 @@ public class Spline {
 //        System.out.println(b.y());
 //        System.out.println(c.y());
 //        System.out.println(d.y());
-//        for (double time = GlobalVars.timeStep; time <= pathTime; time += GlobalVars.timeStep) {
+//        for (double time = AutonomousVars.timeStep; time <= pathTime; time += AutonomousVars.timeStep) {
 //            System.out.println(deltaTheta(time));
 //        }
     }

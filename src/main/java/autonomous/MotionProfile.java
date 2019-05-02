@@ -37,13 +37,13 @@ public class MotionProfile {
     public double velocityProfile(double t) {
         if(velocityProfileGenerated) {
             if(t < cruiseStart) {
-                return GlobalVars.maxAccel*t;
+                return AutonomousVars.maxAccel*t;
             }
             else if(t>= cruiseStart && t<= cruiseEnd) {
-                return GlobalVars.maxVel;
+                return AutonomousVars.maxVel;
             }
             else {
-                return GlobalVars.maxVel - GlobalVars.maxAccel*(t-cruiseEnd);
+                return AutonomousVars.maxVel - AutonomousVars.maxAccel*(t-cruiseEnd);
             }
         }
         else {
@@ -60,21 +60,21 @@ public class MotionProfile {
         //cruise, end cruise
         double v = 0;
         double distance = 0;
-        double t = GlobalVars.timeStep;
+        double t = AutonomousVars.timeStep;
         //Acceleration IN REAL TIME UNITS
-        while(v < GlobalVars.maxVel && !instantaneousCruise) {
+        while(v < AutonomousVars.maxVel && !instantaneousCruise) {
             double vi = v;
-            v = v + GlobalVars.maxAccel * GlobalVars.timeStep;
-            distance += (v-vi)*GlobalVars.timeStep;
+            v = v + AutonomousVars.maxAccel * AutonomousVars.timeStep;
+            distance += (v-vi)* AutonomousVars.timeStep;
             if(distance > totalArcLength/2) {
                 cruiseStart = t;
                 cruiseEnd = t;
                 instantaneousCruise = true;
             }
-            t+=GlobalVars.timeStep;
-            totalTime += GlobalVars.timeStep;
-            if(v >= GlobalVars.maxVel) {
-                v = GlobalVars.maxVel;
+            t+= AutonomousVars.timeStep;
+            totalTime += AutonomousVars.timeStep;
+            if(v >= AutonomousVars.maxVel) {
+                v = AutonomousVars.maxVel;
                 cruiseStart = t;
                 instantaneousCruise = false;
             }
@@ -85,16 +85,16 @@ public class MotionProfile {
             t = 0;
             distance = 0;
             v = 0;
-            while(v < GlobalVars.maxVel) {
+            while(v < AutonomousVars.maxVel) {
                 double vi = v;
-                v = v + GlobalVars.maxAccel*GlobalVars.timeStep;
-                distance += (v-vi)*GlobalVars.timeStep;
-                if(v >= GlobalVars.maxVel) {
-                    cruiseTime = (totalArcLength - 2 * distance)/GlobalVars.maxVel;
+                v = v + AutonomousVars.maxAccel* AutonomousVars.timeStep;
+                distance += (v-vi)* AutonomousVars.timeStep;
+                if(v >= AutonomousVars.maxVel) {
+                    cruiseTime = (totalArcLength - 2 * distance)/ AutonomousVars.maxVel;
                     cruiseEnd = cruiseStart + cruiseTime;
                 }
-                t += GlobalVars.timeStep;
-                totalTime += GlobalVars.timeStep;
+                t += AutonomousVars.timeStep;
+                totalTime += AutonomousVars.timeStep;
             }
             //totalTime = (1 - (cruiseEnd-cruiseStart)); in terms of ratios.
             //T total time is the 2 triangles in the trapezoid, and the cruise is the block in the middle

@@ -1,6 +1,6 @@
 package autonomous;
 
-public class GlobalVars {
+public class AutonomousVars {
     final static double timeStep = 0.1;
     final static double maxVel = 0.2; //m/s
     final static double maxAccel = 0.1; //m/s^2

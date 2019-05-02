@@ -1,6 +1,5 @@
-import motor.*;
 import autonomous.*;
-
+import motor.*;
 
 public class Drivetrain {
     Brushed rMotor;
