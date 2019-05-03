@@ -10,8 +10,6 @@ public class Elevator {
     EasyDriver screwStepper;
 
     public Elevator() {
-        //rotationStepper = new Stepper();
-        //screwStepper = new Stepper();
         rotationStepper = new EasyDriver(0, Global.stepperStepPin1, Global.stepperDirPin1, null,null,null,null, null);
         screwStepper = new EasyDriver(0, Global.stepperStepPin2, Global.stepperDirPin2, null,null,null,null, null);
         //TODO debug
