@@ -13,4 +13,14 @@ public class Global {
     public final static double maxAccel = 0.1; //m/s^2
     public final static double robotWheelBase = 0.18; //Diameter
     public final static double robotWheelDiameter = 0.051;
+
+    public final static Pin encoderPinA = RaspiPin.GPIO_00;
+    public final static Pin encoderPinB = RaspiPin.GPIO_01;
+
+    public final static Pin stepperDirPin1 = RaspiPin.GPIO_08;
+    public final static Pin stepperStepPin1 = RaspiPin.GPIO_09;
+
+    public final static Pin stepperDirPin2 = RaspiPin.GPIO_04;
+    public final static Pin stepperStepPin2 = RaspiPin.GPIO_06;
+
 }

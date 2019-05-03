@@ -9,6 +9,7 @@ import static java.util.concurrent.TimeUnit.*;
 public class Robot {
     Drivetrain d;
     MotionProfile mp;
+    Elevator elevator;
 
     public Robot() {
         init();
@@ -19,6 +20,7 @@ public class Robot {
     public final void init() {
         d = new Drivetrain();
         mp = new MotionProfile(PathPlan.getPlan());
+        elevator = new Elevator();
     }
     public final void autoInit() {
         d.followProfile(mp);
