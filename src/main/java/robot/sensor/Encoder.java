@@ -63,7 +63,7 @@ public class Encoder {
                 }
             }
         };
-        //encoderTimer.schedule(encoderReadTask, 0, samplePeriod);
+        //encoder Timer.schedule(encoderReadTask, 0, samplePeriod);
     }
     public double getVelocity() {
         return deltaTimeNanoseconds/1000;
