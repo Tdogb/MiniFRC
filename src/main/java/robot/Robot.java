@@ -31,7 +31,7 @@ public class Robot {
     }
 
     public final void teleopInit() {
-
+        elevator.setHeight(1);
     }
 
     public final void teleopPeriodic() {
@@ -40,26 +40,47 @@ public class Robot {
 
     final Runnable autoInitRunnable = new Runnable() {
         public void run() {
-            autoInit();
+            try {
+                autoInit();
+            }
+            catch (Exception e) {
+
+            }
         }
     };
     final Runnable autoPeriodicRunnable = new Runnable() {
         public void run() {
-            autoPeriodic();
+            try {
+                autoPeriodic();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     };
     final Runnable teleopInitRunnable = new Runnable() {
         public void run() {
-            teleopInit();
+            try {
+                teleopInit();
+            }
+            catch (Exception e) {
+
+            }
         }
     };
     final Runnable teleopPeriodicRunnable = new Runnable() {
         public void run() {
-            teleopPeriodic();
+            try {
+                teleopPeriodic();
+
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     };
     final ScheduledFuture<?> autoInit = Global.scheduler.schedule(autoInitRunnable, 0, MILLISECONDS);
-    final ScheduledFuture<?> autoPeriodic = Global.scheduler.scheduleAtFixedRate(autoPeriodicRunnable, 1, 50, MILLISECONDS);
+    final ScheduledFuture<?> autoPeriodic = Global.scheduler.scheduleAtFixedRate(autoPeriodicRunnable, 1, Global.updatePeriod, MILLISECONDS);
     final ScheduledFuture<?> teleopInit = Global.scheduler.schedule(teleopInitRunnable, 15000, MILLISECONDS);
-    final ScheduledFuture<?> teleopPeriodic = Global.scheduler.scheduleAtFixedRate(teleopPeriodicRunnable, 15000, 50, MILLISECONDS);
+    final ScheduledFuture<?> teleopPeriodic = Global.scheduler.scheduleAtFixedRate(teleopPeriodicRunnable, 15000, Global.updatePeriod, MILLISECONDS);
 }

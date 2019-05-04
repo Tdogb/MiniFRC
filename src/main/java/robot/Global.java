@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class Global {
+    public final static int updatePeriod = 100;
     public final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(5);
     public final static GpioController gpio = GpioFactory.getInstance();
     public final static double timeStep = 0.1; //Timstep should be greater than the pwm freqency for brushed motors and steppers

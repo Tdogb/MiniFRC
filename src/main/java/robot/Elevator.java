@@ -25,7 +25,7 @@ public class Elevator {
         //TODO debug
         try {
             rotationStepper.move(1,10);
-
+            System.out.println("test123");
         }
         catch (InterruptedException e) {
             e.printStackTrace();
