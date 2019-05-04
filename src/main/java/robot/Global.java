@@ -18,8 +18,8 @@ public class Global {
     public final static Pin encoderPinA = RaspiPin.GPIO_00;
     public final static Pin encoderPinB = RaspiPin.GPIO_01;
 
-    public final static Pin stepperDirPin1 = RaspiPin.GPIO_08;
-    public final static Pin stepperStepPin1 = RaspiPin.GPIO_09;
+    public final static Pin stepperDirPin1 = RaspiPin.GPIO_00;
+    public final static Pin stepperStepPin1 = RaspiPin.GPIO_02;
 
     public final static Pin stepperDirPin2 = RaspiPin.GPIO_04;
     public final static Pin stepperStepPin2 = RaspiPin.GPIO_06;
