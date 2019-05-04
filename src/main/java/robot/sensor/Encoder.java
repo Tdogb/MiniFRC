@@ -24,6 +24,8 @@ public class Encoder {
 
     double velocity = 0;
     long previousTime = 0;
+    long previousTimeNanoseconds = 0;
+    long deltaTimeNanoseconds = 0;
     long encoderTickCount = 0;
 
     public Encoder(Pin pinA, Pin pinB) {
@@ -34,8 +36,14 @@ public class Encoder {
         A.addListener(new GpioPinListenerDigital() {
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent gpioPinDigitalStateChangeEvent) {
                 //System.out.println("A tick");
+                long currentTimeNanoseconds = System.nanoTime();
+                if(aCurrentPinState) {
+                    deltaTimeNanoseconds = currentTimeNanoseconds - previousTimeNanoseconds;
+                }
+                else {
+                    previousTimeNanoseconds = currentTimeNanoseconds;
+                }
                 aCurrentPinState = !aCurrentPinState;
-                velocity =
             }
         });
         B = Global.gpio.provisionDigitalInputPin(pinB, PinPullResistance.OFF);
@@ -55,9 +63,9 @@ public class Encoder {
                 }
             }
         };
-        encoderTimer.schedule(encoderReadTask, 0, samplePeriod, TimeUnit.MICROSECONDS);
+        //encoderTimer.schedule(encoderReadTask, 0, samplePeriod);
     }
     public double getVelocity() {
-        return velocity;
+        return deltaTimeNanoseconds/1000;
     }
 }
