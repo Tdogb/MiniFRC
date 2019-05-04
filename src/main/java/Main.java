@@ -1,5 +1,3 @@
-package robot;
-
 import robot.*;
 
 public class Main {

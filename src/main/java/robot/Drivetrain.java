@@ -7,13 +7,13 @@ import robot.sensor.*;
 public class Drivetrain {
     Brushed rMotor;
     Brushed lMotor;
-    Encoder rightEncoder;
+    static Encoder rightEncoder;
 
     public Drivetrain() {
         rightEncoder = new Encoder(Global.encoderPinA, Global.encoderPinB);
     }
 
-    public boolean followProfile(MotionProfile mp) {
+    public static boolean followProfile(MotionProfile mp) {
 
         return true;
     }

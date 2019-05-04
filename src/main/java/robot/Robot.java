@@ -7,9 +7,9 @@ import java.util.concurrent.ScheduledFuture;
 import static java.util.concurrent.TimeUnit.*;
 
 public class Robot {
-    Drivetrain d;
-    MotionProfile mp;
-    Elevator elevator;
+    //Drivetrain d;
+    //MotionProfile mp;
+    //Elevator elevator;
 
     public Robot() {
         init();
@@ -18,27 +18,27 @@ public class Robot {
     }
 
     public final void init() {
-        d = new Drivetrain();
-        mp = new MotionProfile(PathPlan.getPlan());
-        elevator = new Elevator();
+        //d = new Drivetrain();
+        //mp = new MotionProfile(PathPlan.getPlan());
+        //elevator = new Elevator();
     }
-    public final void autoInit() {
-        d.followProfile(mp);
-    }
-
-    public final void autoPeriodic() {
-        System.out.println(d.rightEncoder.getVelocity());
+    public final static void autoInit() {
+        Drivetrain.followProfile(new MotionProfile(PathPlan.getPlan()));
     }
 
-    public final void teleopInit() {
+    public final static void autoPeriodic() {
+        System.out.println(Drivetrain.rightEncoder.getVelocity());
     }
 
-    public final void teleopPeriodic() {
-        System.out.println(d.rightEncoder.getVelocity());
+    public final static void teleopInit() {
+    }
+
+    public final static void teleopPeriodic() {
+        System.out.println(Drivetrain.rightEncoder.getVelocity());
 
     }
 
-    final Runnable autoInitRunnable = new Runnable() {
+    final static Runnable autoInitRunnable = new Runnable() {
         public void run() {
             try {
                 autoInit();
@@ -48,7 +48,7 @@ public class Robot {
             }
         }
     };
-    final Runnable autoPeriodicRunnable = new Runnable() {
+    final static Runnable autoPeriodicRunnable = new Runnable() {
         public void run() {
             try {
                 autoPeriodic();
@@ -58,7 +58,7 @@ public class Robot {
             }
         }
     };
-    final Runnable teleopInitRunnable = new Runnable() {
+    final static Runnable teleopInitRunnable = new Runnable() {
         public void run() {
             try {
                 teleopInit();
@@ -68,7 +68,7 @@ public class Robot {
             }
         }
     };
-    final Runnable teleopPeriodicRunnable = new Runnable() {
+    final static Runnable teleopPeriodicRunnable = new Runnable() {
         public void run() {
             try {
                 teleopPeriodic();
@@ -79,8 +79,8 @@ public class Robot {
             }
         }
     };
-    final ScheduledFuture<?> autoInit = Global.scheduler.schedule(autoInitRunnable, 0, MILLISECONDS);
-    final ScheduledFuture<?> autoPeriodic = Global.scheduler.scheduleAtFixedRate(autoPeriodicRunnable, 1, Global.updatePeriod, MILLISECONDS);
-    final ScheduledFuture<?> teleopInit = Global.scheduler.schedule(teleopInitRunnable, 15000, MILLISECONDS);
-    final ScheduledFuture<?> teleopPeriodic = Global.scheduler.scheduleAtFixedRate(teleopPeriodicRunnable, 15000, Global.updatePeriod, MILLISECONDS);
+    final static ScheduledFuture<?> autoInit = Global.scheduler.schedule(autoInitRunnable, 0, MILLISECONDS);
+    final static ScheduledFuture<?> autoPeriodic = Global.scheduler.scheduleAtFixedRate(autoPeriodicRunnable, 1, Global.updatePeriod, MILLISECONDS);
+    final static ScheduledFuture<?> teleopInit = Global.scheduler.schedule(teleopInitRunnable, 15000, MILLISECONDS);
+    final static ScheduledFuture<?> teleopPeriodic = Global.scheduler.scheduleAtFixedRate(teleopPeriodicRunnable, 15000, Global.updatePeriod, MILLISECONDS);
 }
