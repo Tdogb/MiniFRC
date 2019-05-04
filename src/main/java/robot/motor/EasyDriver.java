@@ -63,7 +63,7 @@ public class EasyDriver {
     private GpioPinDigitalOutput mStepPin;
     private GpioPinDigitalOutput mDirPin;
     //private GpioPinDigitalOutput mSleepPin;
-    private GpioPinDigitalOutput mEnablePin;
+//    private GpioPinDigitalOutput mEnablePin;
 //    private GpioPinDigitalOutput mMs1Pin;
 //    private GpioPinDigitalOutput mMs2Pin;
 //    private GpioPinDigitalOutput mResetPin;
@@ -87,7 +87,7 @@ public class EasyDriver {
         mStepPin.setShutdownOptions(true, PinState.LOW);
         mDirPin.setShutdownOptions(true, PinState.LOW);
         //mSleepPin.setShutdownOptions(true, PinState.HIGH);
-        mEnablePin.setShutdownOptions(true, PinState.LOW);
+//        mEnablePin.setShutdownOptions(true, PinState.LOW);
 //        mMs1Pin.setShutdownOptions(true, PinState.HIGH);
 //        mMs2Pin.setShutdownOptions(true, PinState.HIGH);
 //        mResetPin.setShutdownOptions(true, PinState.HIGH);
@@ -170,13 +170,13 @@ public class EasyDriver {
 //        mResetPin.low();
 //    }
 
-    public void enable() {
-        mEnablePin.low();
-    }
-
-    public void disable() {
-        mEnablePin.high();
-    }
+//    public void enable() {
+//        mEnablePin.low();
+//    }
+//
+//    public void disable() {
+//        mEnablePin.high();
+//    }
 
     public void shutdown() {
         final GpioController gpio = GpioFactory.getInstance();
