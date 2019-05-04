@@ -27,6 +27,7 @@ public class Robot {
     }
 
     public final void autoPeriodic() {
+        elevator.setHeight(1);
     }
 
     public final void teleopInit() {
