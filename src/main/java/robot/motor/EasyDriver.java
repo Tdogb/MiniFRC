@@ -62,42 +62,39 @@ public class EasyDriver {
     private int mDrivingMode;
     private GpioPinDigitalOutput mStepPin;
     private GpioPinDigitalOutput mDirPin;
-    private GpioPinDigitalOutput mSleepPin;
+    //private GpioPinDigitalOutput mSleepPin;
     private GpioPinDigitalOutput mEnablePin;
-    private GpioPinDigitalOutput mMs1Pin;
-    private GpioPinDigitalOutput mMs2Pin;
-    private GpioPinDigitalOutput mResetPin;
+//    private GpioPinDigitalOutput mMs1Pin;
+//    private GpioPinDigitalOutput mMs2Pin;
+//    private GpioPinDigitalOutput mResetPin;
 
-    public EasyDriver(int drivingMode, Pin stepPin, Pin dirPin, Pin sleepPin,
-                      Pin enablePin, Pin ms1Pin, Pin ms2Pin, Pin resetPin) {
-        mDrivingMode = drivingMode;
+    public EasyDriver(Pin stepPin, Pin dirPin) {
 
         final GpioController gpio = GpioFactory.getInstance();
 
         // provision gpio pin #01 as an output pin and turn on
         mStepPin = gpio.provisionDigitalOutputPin(stepPin, "Step Pin", PinState.LOW);
         mDirPin = gpio.provisionDigitalOutputPin(dirPin, "Direction Pin", PinState.LOW);
-        mSleepPin = gpio.provisionDigitalOutputPin(sleepPin, "Sleep Pin", PinState.HIGH);
-        mEnablePin = gpio.provisionDigitalOutputPin(enablePin, "Enable Pin", PinState.LOW);
-        mMs1Pin = gpio.provisionDigitalOutputPin(ms1Pin, "MS1 Pin", PinState.HIGH);
-        mMs2Pin = gpio.provisionDigitalOutputPin(ms2Pin, "MS2 Pin", PinState.HIGH);
-        mResetPin = gpio.provisionDigitalOutputPin(resetPin, "Reset Pin", PinState.HIGH);
+        //mSleepPin = gpio.provisionDigitalOutputPin(sleepPin, "Sleep Pin", PinState.HIGH);
+//        mEnablePin = gpio.provisionDigitalOutputPin(enablePin, "Enable Pin", PinState.LOW);
+//        mMs1Pin = gpio.provisionDigitalOutputPin(ms1Pin, "MS1 Pin", PinState.HIGH);
+//        mMs2Pin = gpio.provisionDigitalOutputPin(ms2Pin, "MS2 Pin", PinState.HIGH);
+//        mResetPin = gpio.provisionDigitalOutputPin(resetPin, "Reset Pin", PinState.HIGH);
 
-        setDrivingMode(drivingMode);
+//        setDrivingMode(drivingMode);
 
 
         mStepPin.setShutdownOptions(true, PinState.LOW);
         mDirPin.setShutdownOptions(true, PinState.LOW);
-        mSleepPin.setShutdownOptions(true, PinState.HIGH);
+        //mSleepPin.setShutdownOptions(true, PinState.HIGH);
         mEnablePin.setShutdownOptions(true, PinState.LOW);
-        mMs1Pin.setShutdownOptions(true, PinState.HIGH);
-        mMs2Pin.setShutdownOptions(true, PinState.HIGH);
-        mResetPin.setShutdownOptions(true, PinState.HIGH);
+//        mMs1Pin.setShutdownOptions(true, PinState.HIGH);
+//        mMs2Pin.setShutdownOptions(true, PinState.HIGH);
+//        mResetPin.setShutdownOptions(true, PinState.HIGH);
     }
 
-    public EasyDriver(Pin stepPin, Pin dirPin, Pin sleepPin,
-                      Pin enablePin, Pin ms1Pin, Pin ms2Pin, Pin resetPin) {
-        new EasyDriver(ONE_EIGHTH_STEP, stepPin, dirPin, sleepPin, enablePin, ms1Pin, ms2Pin, resetPin);
+    public EasyDriver(Pin stepPin, Pin dirPin, Pin sleepPin, Pin enablePin, Pin ms1Pin, Pin ms2Pin, Pin resetPin) {
+        new EasyDriver(stepPin, dirPin);
     }
 
     public EasyDriver(Pin stepPin) {
@@ -109,30 +106,30 @@ public class EasyDriver {
         mStepPin = gpio.provisionDigitalOutputPin(stepPin, "MyLED", PinState.LOW);
     }
 
-    public void setDrivingMode(int drivingMode) {
-        switch (drivingMode) {
-            case FULL_STEP: {
-                mMs1Pin.low();
-                mMs2Pin.low();
-                break;
-            }
-            case HALF_STEP: {
-                mMs1Pin.high();
-                mMs2Pin.low();
-                break;
-            }
-            case ONE_FOURTH_STEP: {
-                mMs1Pin.low();
-                mMs2Pin.high();
-                break;
-            }
-            case ONE_EIGHTH_STEP: {
-                mMs1Pin.high();
-                mMs2Pin.high();
-                break;
-            }
-        }
-    }
+//    public void setDrivingMode(int drivingMode) {
+//        switch (drivingMode) {
+//            case FULL_STEP: {
+//                mMs1Pin.low();
+//                mMs2Pin.low();
+//                break;
+//            }
+//            case HALF_STEP: {
+//                mMs1Pin.high();
+//                mMs2Pin.low();
+//                break;
+//            }
+//            case ONE_FOURTH_STEP: {
+//                mMs1Pin.low();
+//                mMs2Pin.high();
+//                break;
+//            }
+//            case ONE_EIGHTH_STEP: {
+//                mMs1Pin.high();
+//                mMs2Pin.high();
+//                break;
+//            }
+//        }
+//    }
 
     public void rotate(double degrees, int interval, int drivingMode) throws InterruptedException {
         move(getStepsFromDegrees(degrees, drivingMode), interval, drivingMode);
@@ -143,10 +140,6 @@ public class EasyDriver {
     }
 
     public void move(int distance, int interval, int drivingMode) throws InterruptedException {
-        if (drivingMode != mDrivingMode) {
-            setDrivingMode(drivingMode);
-        }
-
         if (distance < 0) {
             setDirection(BACKWARD);
         } else {
@@ -165,17 +158,17 @@ public class EasyDriver {
         move(steps, interval, mDrivingMode);
     }
 
-    public void sleep() {
-        mSleepPin.low();
-    }
+//    public void sleep() {
+//        mSleepPin.low();
+//    }
+//
+//    public void wake() {
+//        mSleepPin.high();
+//    }
 
-    public void wake() {
-        mSleepPin.high();
-    }
-
-    public void reset() {
-        mResetPin.low();
-    }
+//    public void reset() {
+//        mResetPin.low();
+//    }
 
     public void enable() {
         mEnablePin.low();
