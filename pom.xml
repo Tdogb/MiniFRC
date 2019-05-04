@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>groupId</groupId>
     <artifactId>SplineExperiments</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -17,34 +15,25 @@
         <pi.port>22</pi.port>
         <pi.user>pi</pi.user>
         <pi.password>raspberry</pi.password>
-        <pi.deployDirectory>/home/pi/Build</pi.deployDirectory>
+        <pi.deployDirectory>/home/pi/artifacts</pi.deployDirectory>
         <pi.main.class>Main</pi.main.class>
 
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.pi4j/pi4j-device -->
-        <dependency>
-            <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-device</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-gpio-extension</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant</artifactId>
-            <version>1.9.6</version>
+            <version>1.0</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
 
@@ -102,40 +91,130 @@
                                 <sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}"
                                          password="${pi.password}" trust="true" failonerror="false"
                                          verbose="true"
-                                         command="java -jar ${pi.deployDirectory}/${project.build.finalName}-jar-with-dependencies.jar"/>
+                                         command="sudo java -Dpi4j.linking=dynamic -jar ${pi.deployDirectory}/${project.build.finalName}-jar-with-dependencies.jar"/>
                             </tasks>
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-jsch</artifactId>
+                        <version>1.9.6</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
+</project>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<project xmlns="http://maven.apache.org/POM/4.0.0"-->
+         <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+         <!--xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">-->
+    <!--<modelVersion>4.0.0</modelVersion>-->
+    <!--<groupId>groupId</groupId>-->
+    <!--<artifactId>SplineExperiments</artifactId>-->
+    <!--<version>1.0-SNAPSHOT</version>-->
+    <!--<packaging>jar</packaging>-->
+    <!--<properties>-->
+        <!--<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
+        <!--<maven.compiler.source>1.8</maven.compiler.source>-->
+        <!--<maven.compiler.target>1.8</maven.compiler.target>-->
+
+        <!--&lt;!&ndash; DEFAULT RASPBERRY PI PROPERTIES &ndash;&gt;-->
+        <!--<pi.host>10.0.0.38</pi.host>-->
+        <!--<pi.port>22</pi.port>-->
+        <!--<pi.user>pi</pi.user>-->
+        <!--<pi.password>raspberry</pi.password>-->
+        <!--<pi.deployDirectory>/home/pi/MavenBuild</pi.deployDirectory>-->
+        <!--<pi.main.class>Main</pi.main.class>-->
+
+    <!--</properties>-->
+
+    <!--<dependencies>-->
+        <!--<dependency>-->
+            <!--<groupId>com.pi4j</groupId>-->
+            <!--<artifactId>pi4j-core</artifactId>-->
+            <!--<version>1.2</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.pi4j/pi4j-device &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.pi4j</groupId>-->
+            <!--<artifactId>pi4j-device</artifactId>-->
+            <!--<version>1.2</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.pi4j</groupId>-->
+            <!--<artifactId>pi4j-gpio-extension</artifactId>-->
+            <!--<version>1.2</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.ant</groupId>-->
+            <!--<artifactId>ant</artifactId>-->
+            <!--<version>1.9.6</version>-->
+        <!--</dependency>-->
+    <!--</dependencies>-->
     <!--<build>-->
         <!--<plugins>-->
+
+            <!--&lt;!&ndash; This plugin will generate JAR MANIFEST file inside the JAR in order to make our applicationeasily runnable &ndash;&gt;-->
             <!--<plugin>-->
                 <!--<artifactId>maven-assembly-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<archive>-->
+                        <!--<manifest>-->
+                            <!--<addClasspath>true</addClasspath>-->
+                            <!--<mainClass>${pi.main.class}</mainClass>-->
+                        <!--</manifest>-->
+                    <!--</archive>-->
+                    <!--<descriptorRefs>-->
+                        <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
+                    <!--</descriptorRefs>-->
+                <!--</configuration>-->
                 <!--<executions>-->
                     <!--<execution>-->
+                        <!--<id>make-my-jar-with-dependencies</id>-->
                         <!--<phase>package</phase>-->
                         <!--<goals>-->
                             <!--<goal>single</goal>-->
                         <!--</goals>-->
                     <!--</execution>-->
                 <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<archive>-->
-                        <!--<manifest>-->
-                            <!--<addClasspath>true</addClasspath>-->
-                            <!--<mainClass>Main</mainClass>-->
-                        <!--</manifest>-->
-                    <!--</archive>-->
-                    <!--<descriptorRefs>-->
-                        <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
-                    <!--</descriptorRefs>-->
-                    <!--<finalName>${project.artifactId}</finalName>-->
-                    <!--<appendAssemblyId>false</appendAssemblyId>-->
-                <!--</configuration>-->
+            <!--</plugin>-->
+
+            <!--&lt;!&ndash;This plugin will Transfer the executable JAR file to the Pi and runs it &ndash;&gt;-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-antrun-plugin</artifactId>-->
+                <!--<version>1.8</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>install</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>run</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<tasks>-->
+                                <!--&lt;!&ndash; ensure the target directory exists on the Raspberry Pi &ndash;&gt;-->
+                                <!--<sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}" password="${pi.password}" trust="true" failonerror="false" verbose="true" command="mkdir &#45;&#45;parents ${pi.deployDirectory}"/>-->
+
+                                <!--&lt;!&ndash; copy the JAR file to the Raspberry Pi &ndash;&gt;-->
+                                <!--<scp-->
+                                        <!--file="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar"-->
+                                        <!--todir="${pi.user}:${pi.password}@${pi.host}:${pi.deployDirectory}"-->
+                                        <!--port="${pi.port}" trust="true" verbose="true" failonerror="true">-->
+                                <!--</scp>-->
+
+                                <!--&lt;!&ndash; run the JAR file on the Raspberry Pi &ndash;&gt;-->
+                                <!--<sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}"-->
+                                         <!--password="${pi.password}" trust="true" failonerror="false"-->
+                                         <!--verbose="true"-->
+                                         <!--command="java -jar ${pi.deployDirectory}/${project.build.finalName}-jar-with-dependencies.jar"/>-->
+                            <!--</tasks>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
             <!--</plugin>-->
         <!--</plugins>-->
     <!--</build>-->
-</project>
+<!--</project>-->
