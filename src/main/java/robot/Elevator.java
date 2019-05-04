@@ -13,7 +13,7 @@ public class Elevator {
         rotationStepper = new EasyDriver(Global.stepperStepPin1, Global.stepperDirPin1);
         screwStepper = new EasyDriver(Global.stepperStepPin2, Global.stepperDirPin2);
         //TODO debug
-        System.out.println("Set height");
+        //System.out.println("Set height");
         setHeight(1);
     }
 
@@ -25,7 +25,7 @@ public class Elevator {
         //TODO debug
         try {
             rotationStepper.move(1,10);
-            System.out.println("test123");
+            //System.out.println("test123");
         }
         catch (InterruptedException e) {
             e.printStackTrace();

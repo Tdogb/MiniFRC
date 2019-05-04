@@ -27,14 +27,14 @@ public class Robot {
     }
 
     public final void autoPeriodic() {
-        elevator.setHeight(1);
+        System.out.println(d.rightEncoder.getVelocity());
     }
 
     public final void teleopInit() {
-        elevator.setHeight(1);
     }
 
     public final void teleopPeriodic() {
+        System.out.println(d.rightEncoder.getVelocity());
 
     }
 
