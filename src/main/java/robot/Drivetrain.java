@@ -13,7 +13,7 @@ public class Drivetrain {
         rightEncoder = new Encoder(Global.encoderPinA, Global.encoderPinB);
     }
 
-    public static boolean followProfile(MotionProfile mp) {
+    public boolean followProfile(MotionProfile mp) {
 
         return true;
     }
