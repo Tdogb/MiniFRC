@@ -30,7 +30,13 @@
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
-            <version>1.0</version>
+            <version>1.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.pi4j/pi4j-device -->
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-device</artifactId>
+            <version>1.2</version>
         </dependency>
     </dependencies>
 
@@ -91,7 +97,7 @@
                                 <sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}"
                                          password="${pi.password}" trust="true" failonerror="false"
                                          verbose="true"
-                                         command="sudo java -Dpi4j.linking=dynamic -jar ${pi.deployDirectory}/${project.build.finalName}-jar-with-dependencies.jar"/>
+                                         command="sudo java -Dpi4j.linking=dynamic -classpath '/opt/pi4j/lib/*' -jar ${pi.deployDirectory}/${project.build.finalName}-jar-with-dependencies.jar"/>
                             </tasks>
                         </configuration>
                     </execution>
