@@ -7,7 +7,7 @@ import robot.sensor.*;
 public class Drivetrain {
     Brushed rMotor;
     Brushed lMotor;
-    static Encoder rightEncoder;
+    Encoder rightEncoder;
 
     public Drivetrain() {
         rightEncoder = new Encoder(Global.encoderPinA, Global.encoderPinB);

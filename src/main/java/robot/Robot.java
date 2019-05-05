@@ -10,31 +10,45 @@ public class Robot {
     Drivetrain d;
     MotionProfile mp;
     Elevator elevator;
+    InputController controller;
 
     public Robot() {
+        d = new Drivetrain();
+        mp = new MotionProfile(PathPlan.getPlan());
+        elevator = new Elevator();
+        controller = new InputController();
         init();
         autoInit();
         teleopInit();
     }
 
     public final void init() {
-        d = new Drivetrain();
-        mp = new MotionProfile(PathPlan.getPlan());
-        elevator = new Elevator();
+
     }
     public final void autoInit() {
         d.followProfile(mp);
     }
 
     public final void autoPeriodic() {
-        System.out.println(d.rightEncoder.getVelocity());
+        //while(true) {
+            //try {
+                controller.updateController();
+                System.out.println(controller.getAnalogStickLeftX());
+                elevator.setHeight(1);
+                //Thread.sleep(1);
+            //}
+//            catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+        //}
     }
 
     public final void teleopInit() {
     }
 
     public final void teleopPeriodic() {
-        System.out.println(d.rightEncoder.getVelocity());
+        //System.out.println(d.rightEncoder.getVelocity());
+        elevator.setHeight(1);
 
     }
 
@@ -55,6 +69,7 @@ public class Robot {
             }
             catch (Exception e) {
                 e.printStackTrace();
+                //System.out.println("catch");
             }
         }
     };
@@ -72,15 +87,14 @@ public class Robot {
         public void run() {
             try {
                 teleopPeriodic();
-
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
         }
     };
-    final ScheduledFuture<?> autoInit = Global.scheduler.schedule(autoInitRunnable, 0, MILLISECONDS);
+    //final ScheduledFuture<?> autoInit = Global.scheduler.schedule(autoInitRunnable, 0, MILLISECONDS);
     final ScheduledFuture<?> autoPeriodic = Global.scheduler.scheduleAtFixedRate(autoPeriodicRunnable, 1, Global.updatePeriod, MILLISECONDS);
-    final ScheduledFuture<?> teleopInit = Global.scheduler.schedule(teleopInitRunnable, 15000, MILLISECONDS);
-    final ScheduledFuture<?> teleopPeriodic = Global.scheduler.scheduleAtFixedRate(teleopPeriodicRunnable, 15000, Global.updatePeriod, MILLISECONDS);
+    //final ScheduledFuture<?> teleopInit = Global.scheduler.schedule(teleopInitRunnable, 15000, MILLISECONDS);
+    //final ScheduledFuture<?> teleopPeriodic = Global.scheduler.scheduleAtFixedRate(teleopPeriodicRunnable, 15000, Global.updatePeriod, MILLISECONDS);
 }

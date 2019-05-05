@@ -24,7 +24,7 @@ public class Elevator {
     public void setHeight(double height) {
         //TODO debug
         try {
-            rotationStepper.move(1,10);
+            rotationStepper.move(3,1);
             //System.out.println("test123");
         }
         catch (InterruptedException e) {
