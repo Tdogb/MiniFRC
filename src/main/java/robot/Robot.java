@@ -23,24 +23,25 @@ public class Robot {
     }
 
     public final void init() {
-
+        //TODO debug
+        autoPeriodic();
     }
     public final void autoInit() {
         d.followProfile(mp);
     }
 
     public final void autoPeriodic() {
-        //while(true) {
-            //try {
+        while(true) {
+//            try {
                 controller.updateController();
                 System.out.println(controller.getAnalogStickLeftX());
                 elevator.setHeight(1);
                 //Thread.sleep(1);
-            //}
+//            }
 //            catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
-        //}
+        }
     }
 
     public final void teleopInit() {
@@ -94,7 +95,7 @@ public class Robot {
         }
     };
     //final ScheduledFuture<?> autoInit = Global.scheduler.schedule(autoInitRunnable, 0, MILLISECONDS);
-    final ScheduledFuture<?> autoPeriodic = Global.scheduler.scheduleAtFixedRate(autoPeriodicRunnable, 1, Global.updatePeriod, MILLISECONDS);
+    //final ScheduledFuture<?> autoPeriodic = Global.scheduler.scheduleAtFixedRate(autoPeriodicRunnable, 1, Global.updatePeriod, MILLISECONDS);
     //final ScheduledFuture<?> teleopInit = Global.scheduler.schedule(teleopInitRunnable, 15000, MILLISECONDS);
     //final ScheduledFuture<?> teleopPeriodic = Global.scheduler.scheduleAtFixedRate(teleopPeriodicRunnable, 15000, Global.updatePeriod, MILLISECONDS);
 }

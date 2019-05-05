@@ -25,6 +25,7 @@ public class InputController {
     public InputController() {
         List<Controller> gamepads = Arrays.stream(ControllerEnvironment.getDefaultEnvironment().getControllers()).filter(controller -> controller.getType().equals(Controller.Type.GAMEPAD)).collect(Collectors.toList());
         gamepad = gamepads.get(0);
+        System.out.println(gamepad.getName());
         foundController = !gamepad.equals(null);
         eventQueue = gamepad.getEventQueue();
         event = new Event();
