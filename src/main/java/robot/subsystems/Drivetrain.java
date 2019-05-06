@@ -1,5 +1,6 @@
-package robot;
+package robot.subsystems;
 
+import robot.Global;
 import robot.autonomous.*;
 import robot.motor.*;
 import robot.sensor.*;
@@ -11,6 +12,9 @@ public class Drivetrain {
 
     public Drivetrain() {
         rightEncoder = new Encoder(Global.encoderPinA, Global.encoderPinB);
+    }
+
+    public void drive() {
     }
 
     public boolean followProfile(MotionProfile mp) {

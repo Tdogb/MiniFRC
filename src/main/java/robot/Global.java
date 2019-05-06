@@ -24,4 +24,5 @@ public class Global {
     public final static Pin stepperDirPin2 = RaspiPin.GPIO_04;
     public final static Pin stepperStepPin2 = RaspiPin.GPIO_06;
 
+    public static InputController controller = new InputController();
 }

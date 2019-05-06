@@ -1,5 +1,6 @@
-package robot;
+package robot.subsystems;
 
+import robot.Global;
 import robot.motor.EasyDriver;
 import robot.motor.Stepper;
 
@@ -12,9 +13,6 @@ public class Elevator {
     public Elevator() {
         rotationStepper = new EasyDriver(Global.stepperStepPin1, Global.stepperDirPin1);
         screwStepper = new EasyDriver(Global.stepperStepPin2, Global.stepperDirPin2);
-        //TODO debug
-        //System.out.println("Set height");
-        setHeight(1);
     }
 
     public double getHeight() {
@@ -24,7 +22,7 @@ public class Elevator {
     public void setHeight(double height) {
         //TODO debug
         try {
-            rotationStepper.move(3,1);
+            rotationStepper.move(1,1);
             //System.out.println("test123");
         }
         catch (InterruptedException e) {

@@ -1,19 +1,17 @@
 package robot;
 
 import robot.autonomous.MotionProfile;
-
-import java.util.concurrent.ScheduledFuture;
-
-import static java.util.concurrent.TimeUnit.*;
+import robot.subsystems.Drivetrain;
+import robot.subsystems.Elevator;
 
 public class Robot {
-    Drivetrain d;
+    Drivetrain drivetrain;
     MotionProfile mp;
     Elevator elevator;
     InputController controller;
 
     public Robot() {
-        d = new Drivetrain();
+        drivetrain = new Drivetrain();
         mp = new MotionProfile(PathPlan.getPlan());
         elevator = new Elevator();
         controller = new InputController();
@@ -27,14 +25,13 @@ public class Robot {
         autoPeriodic();
     }
     public final void autoInit() {
-        d.followProfile(mp);
+        drivetrain.followProfile(mp);
     }
 
     public final void autoPeriodic() {
         while(true) {
-            controller.updateController();
-            System.out.println(controller.getAnalogStickLeftX());
             elevator.setHeight(1);
+            drivetrain.drive();
         }
     }
 
