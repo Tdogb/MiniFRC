@@ -64,7 +64,6 @@
             <version>2.0.7</version>
             <type>pom</type>
         </dependency>
-
     </dependencies>
     <build>
         <plugins>
@@ -126,7 +125,7 @@
                                 <sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}"
                                          password="${pi.password}" trust="true" failonerror="false"
                                          verbose="true"
-                                         command="sudo java -Dpi4j.linking=dynamic -classpath '/opt/pi4j/lib/*' -jar ${pi.deployDirectory}/${project.build.finalName}-jar-with-dependencies.jar"/>
+                                         command="sudo java -Djava.library.path='${pi.deployDirectory}/lib' -Djinput.plugins=net.java.games.input.LinuxEnvironmentPlugin -Dpi4j.linking=dynamic -classpath '/opt/pi4j/lib/*:/usr/share/java/*' -jar ${pi.deployDirectory}/${project.build.finalName}-jar-with-dependencies.jar"/>
                             </tasks>
                         </configuration>
                     </execution>
