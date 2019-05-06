@@ -32,15 +32,9 @@ public class Robot {
 
     public final void autoPeriodic() {
         while(true) {
-//            try {
-                controller.updateController();
-                System.out.println(controller.getAnalogStickLeftX());
-                elevator.setHeight(1);
-                //Thread.sleep(1);
-//            }
-//            catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            controller.updateController();
+            System.out.println(controller.getAnalogStickLeftX());
+            elevator.setHeight(1);
         }
     }
 
