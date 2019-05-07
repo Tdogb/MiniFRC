@@ -1,4 +1,4 @@
-package robot;
+package robot.util;
 
 import robot.autonomous.Waypoint;
 

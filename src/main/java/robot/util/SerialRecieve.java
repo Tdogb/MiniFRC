@@ -1,8 +1,9 @@
-package robot;
+package robot.util;
 
 import com.pi4j.io.serial.*;
 import com.pi4j.util.CommandArgumentParser;
 import com.pi4j.util.Console;
+import robot.Global;
 
 import java.io.IOException;
 import java.util.Date;
@@ -77,8 +78,8 @@ public class SerialRecieve {
                     if(data.length > 0) {
                         Global.controller.setAnalogStickLeftX(data[0]);
                         Global.controller.setAnalogStickLeftY(data[1]);
-                        Global.controller.setAnalogStickRightX(data[2]);
-                        Global.controller.setAnalogStickRightY(data[3]);
+                        Global.controller.setAnalogStickRightY(data[2]);
+                        Global.controller.setAnalogStickRightX(data[3]);
                         Global.controller.setSquareButton(((data[4] >> 0) & 1) != 0);
                         Global.controller.setXButton(((data[4] >> 1) & 1) != 0);
                         Global.controller.setOButton(((data[4] >> 2) & 1) != 0);
