@@ -5,16 +5,15 @@ public class InputController {
     boolean XButton;
     boolean TriangleButton;
     boolean SquareButton;
-    float analogStickLeftX;
-    float analogStickLeftY;
-    float analogStickRightY;
-    float analogStickRightX;
+    byte analogStickLeftX;
+    byte analogStickLeftY;
+    byte analogStickRightY;
+    byte analogStickRightX;
     int dPadState; //off=0,up=1, down=2, right=3, left=4
     boolean foundController = false;
     SerialRecieve serial;
 
     public InputController() {
-        serial = new SerialRecieve();
     }
 
     public void setOButton(boolean OButton) {
@@ -33,19 +32,19 @@ public class InputController {
         SquareButton = squareButton;
     }
 
-    public void setAnalogStickLeftX(float analogStickLeftX) {
+    public void setAnalogStickLeftX(byte analogStickLeftX) {
         this.analogStickLeftX = analogStickLeftX;
     }
 
-    public void setAnalogStickLeftY(float analogStickLeftY) {
+    public void setAnalogStickLeftY(byte analogStickLeftY) {
         this.analogStickLeftY = analogStickLeftY;
     }
 
-    public void setAnalogStickRightY(float analogStickRightY) {
+    public void setAnalogStickRightY(byte analogStickRightY) {
         this.analogStickRightY = analogStickRightY;
     }
 
-    public void setAnalogStickRightX(float analogStickRightX) {
+    public void setAnalogStickRightX(byte analogStickRightX) {
         this.analogStickRightX = analogStickRightX;
     }
 
@@ -73,19 +72,19 @@ public class InputController {
         return SquareButton;
     }
 
-    public float getAnalogStickLeftX() {
+    public byte getAnalogStickLeftX() {
         return analogStickLeftX;
     }
 
-    public float getAnalogStickLeftY() {
+    public byte getAnalogStickLeftY() {
         return analogStickLeftY;
     }
 
-    public float getAnalogStickRightY() {
+    public byte getAnalogStickRightY() {
         return analogStickRightY;
     }
 
-    public float getAnalogStickRightX() {
+    public byte getAnalogStickRightX() {
         return analogStickRightX;
     }
 

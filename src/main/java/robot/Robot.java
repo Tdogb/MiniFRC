@@ -1,8 +1,13 @@
 package robot;
 
+import com.pi4j.wiringpi.Gpio;
 import robot.autonomous.MotionProfile;
 import robot.subsystems.Drivetrain;
 import robot.subsystems.Elevator;
+
+import java.util.concurrent.ScheduledFuture;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class Robot {
     Drivetrain drivetrain;
@@ -21,11 +26,14 @@ public class Robot {
     }
 
     public final void init() {
+        Gpio.wiringPiSetup();
+        Global.controller = new InputController();
+        Global.serial = new SerialRecieve();
         //TODO debug
         autoPeriodic();
     }
     public final void autoInit() {
-        drivetrain.followProfile(mp);
+        //drivetrain.followProfile(mp);
     }
 
     public final void autoPeriodic() {
@@ -57,7 +65,8 @@ public class Robot {
     final Runnable autoPeriodicRunnable = new Runnable() {
         public void run() {
             try {
-                autoPeriodic();
+//                elevator.setHeight(1);
+//                drivetrain.drive();
             }
             catch (Exception e) {
                 e.printStackTrace();

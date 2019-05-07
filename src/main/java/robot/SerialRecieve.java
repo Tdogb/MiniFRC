@@ -66,7 +66,6 @@ public class SerialRecieve {
         serial.addListener(new SerialDataEventListener() {
             @Override
             public void dataReceived(SerialDataEvent event) {
-
                 // NOTE! - It is extremely important to read the data received from the
                 // serial port.  If it does not get read from the receive buffer, the
                 // buffer will continue to grow and consume memory.

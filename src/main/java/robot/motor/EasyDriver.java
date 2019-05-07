@@ -77,20 +77,11 @@ public class EasyDriver {
         mDirPin = gpio.provisionDigitalOutputPin(dirPin, "Direction Pin", PinState.LOW);
         //mSleepPin = gpio.provisionDigitalOutputPin(sleepPin, "Sleep Pin", PinState.HIGH);
 //        mEnablePin = gpio.provisionDigitalOutputPin(enablePin, "Enable Pin", PinState.LOW);
-//        mMs1Pin = gpio.provisionDigitalOutputPin(ms1Pin, "MS1 Pin", PinState.HIGH);
-//        mMs2Pin = gpio.provisionDigitalOutputPin(ms2Pin, "MS2 Pin", PinState.HIGH);
-//        mResetPin = gpio.provisionDigitalOutputPin(resetPin, "Reset Pin", PinState.HIGH);
-
-//        setDrivingMode(drivingMode);
-
 
         mStepPin.setShutdownOptions(true, PinState.LOW);
         mDirPin.setShutdownOptions(true, PinState.LOW);
         //mSleepPin.setShutdownOptions(true, PinState.HIGH);
 //        mEnablePin.setShutdownOptions(true, PinState.LOW);
-//        mMs1Pin.setShutdownOptions(true, PinState.HIGH);
-//        mMs2Pin.setShutdownOptions(true, PinState.HIGH);
-//        mResetPin.setShutdownOptions(true, PinState.HIGH);
     }
 
     public EasyDriver(Pin stepPin, Pin dirPin, Pin sleepPin, Pin enablePin, Pin ms1Pin, Pin ms2Pin, Pin resetPin) {
@@ -105,31 +96,6 @@ public class EasyDriver {
         // provision gpio pin #01 as an output pin and turn on
         mStepPin = gpio.provisionDigitalOutputPin(stepPin, "MyLED", PinState.LOW);
     }
-
-//    public void setDrivingMode(int drivingMode) {
-//        switch (drivingMode) {
-//            case FULL_STEP: {
-//                mMs1Pin.low();
-//                mMs2Pin.low();
-//                break;
-//            }
-//            case HALF_STEP: {
-//                mMs1Pin.high();
-//                mMs2Pin.low();
-//                break;
-//            }
-//            case ONE_FOURTH_STEP: {
-//                mMs1Pin.low();
-//                mMs2Pin.high();
-//                break;
-//            }
-//            case ONE_EIGHTH_STEP: {
-//                mMs1Pin.high();
-//                mMs2Pin.high();
-//                break;
-//            }
-//        }
-//    }
 
     public void rotate(double degrees, int interval, int drivingMode) throws InterruptedException {
         move(getStepsFromDegrees(degrees, drivingMode), interval, drivingMode);
