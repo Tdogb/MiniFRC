@@ -33,14 +33,22 @@ public class Brushed {
             pwmReverse.setEnabled(false);
         }
         else if(percentVoltage > 0){
+            if(percentVoltage > 100) {
+                percentVoltage = 100;
+                System.err.print("Motor value over 100");
+            }
             pwmReverse.setEnabled(false);
             pwmForwards.setEnabled(true);
             pwmForwards.setDutyCycle(Math.abs(percentVoltage));
         }
         else {
+            if(percentVoltage < -100) {
+                percentVoltage = -100;
+                System.err.print("Motor value under -100");
+            }
             pwmForwards.setEnabled(false);
             pwmReverse.setEnabled(true);
-            pwmForwards.setDutyCycle(Math.abs(percentVoltage));
+            pwmReverse.setDutyCycle(Math.abs(percentVoltage));
         }
     }
 

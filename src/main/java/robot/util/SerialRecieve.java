@@ -75,7 +75,7 @@ public class SerialRecieve {
                 try {
                     //console.println("[HEX DATA]   " + event.getHexByteString());
                     byte[] data = event.getBytes();
-                    if(data.length > 0) {
+                    if(data.length > 0 && data.length == 5) {
                         Global.controller.setAnalogStickLeftX(data[0]);
                         Global.controller.setAnalogStickLeftY(data[1]);
                         Global.controller.setAnalogStickRightY(data[2]);

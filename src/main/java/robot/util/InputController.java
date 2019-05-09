@@ -76,6 +76,12 @@ public class InputController {
         return analogStickLeftX;
     }
 
+    public byte getFilteredAnalogStickLeftX() {
+//        if(analogStickLeftX )
+        return 0;
+    }
+
+
     public byte getAnalogStickLeftY() {
         return analogStickLeftY;
     }

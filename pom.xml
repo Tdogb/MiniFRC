@@ -119,7 +119,7 @@
                                 <!--Kill all java processes-->
                                 <sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}" password="${pi.password}"
                                          trust="true" failonerror="false" verbose="true"
-                                         command="sudo kill $(ps aux | grep &quot;java&quot; | grep -v 'grep' | awk '{print $2}')"/>
+                                         command="sudo kill $(ps aux | grep &quot;java&quot; | grep -v 'grep' | awk '{print $2}') &amp;&amp; sudo java -Djava.library.path='${pi.deployDirectory}/lib' -Djinput.plugins=net.java.games.input.LinuxEnvironmentPlugin -Dpi4j.linking=dynamic -classpath '/opt/pi4j/lib/*:/usr/share/java/*' -jar ${pi.deployDirectory}/${project.build.finalName}-jar-with-dependencies.jar"/>
 
                                 <!-- run the JAR file on the Raspberry Pi -->
                                 <sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}"
