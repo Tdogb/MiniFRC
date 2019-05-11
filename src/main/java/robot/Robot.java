@@ -37,7 +37,7 @@ public class Robot {
 
     public final void autoPeriodic() {
         while(true) {
-            elevator.setHeight(1);
+            elevator.setHeight(2);
             drivetrain.drive();
         }
     }

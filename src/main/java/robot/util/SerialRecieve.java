@@ -54,12 +54,6 @@ public class SerialRecieve {
         // (This is a utility class to abstract some of the boilerplate code)
         final Console console = new Console();
 
-        // print program title/header
-        console.title("<-- The Pi4J Project -->", "Serial Communication Example");
-
-        // allow for user to exit program using CTRL-C
-        console.promptForExit();
-
         // create an instance of the serial communications class
         final Serial serial = SerialFactory.createInstance();
 
@@ -118,15 +112,16 @@ public class SerialRecieve {
 //            if(args.length > 0){
 //                config = CommandArgumentParser.getSerialConfig(config, args);
 //            }
-            System.out.println("Serial connecting");
-            // display connection details
-            console.box(" Connecting to: " + config.toString(),
-                    " We are sending ASCII data on the serial port every 1 second.",
-                    " Data received on serial port will be displayed below.");
+//            System.out.println("Serial connecting");
+//            // display connection details
+//            console.box(" Connecting to: " + config.toString(),
+//                    " We are sending ASCII data on the serial port every 1 second.",
+//                    " Data received on serial port will be displayed below.");
 
 
             // open the default serial device/port with the configuration settings
             serial.open(config);
+            System.out.println("Serial connected");
 
             // continuous loop to keep the program running until the user terminates the program
 //            while(console.isRunning()) {
